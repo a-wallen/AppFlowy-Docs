@@ -1,35 +1,35 @@
 # Domain Driven Design
 
-For many architects, the process of data modeling is driven by intuition. However, there are well-formulated methodologies for approaching it more formally. We chose [Domain-Driven Design](https://en.wikipedia.org/wiki/Domain-driven\_design) for AppFlowy's architecture.
+For many architects, the process of data modeling is driven by intuition. However, there are well-formulated methodologies for approaching it more formally. We chose [Domain-Driven Design](https://en.wikipedia.org/wiki/Domain-driven_design) for AppFlowy's architecture.
 
 ## :boom: Layered architecture
 
 The most common architecture pattern is the layered architecture pattern, known as the n-tier architecture pattern, where we partition the software into `layers` to reduce the complexity. Each layer of the layered architecture pattern has a specific role and responsibility.`DDD` consists of four layers.
 
-![file : ddd\_layered\_achitecture.wsd](https://raw.githubusercontent.com/AppFlowy-IO/docs/main/uml/output/DDDLayeredArchitecture.svg)
+![file : ddd_layered_achitecture.wsd](https://raw.githubusercontent.com/AppFlowy-IO/docs/main/uml/output/DDDLayeredArchitecture.svg)
 
 ### **Presentation Layer**:
 
-* Responsible for presenting information to the user and interpreting user commands.
-* Consists of Widgets and also the state of the Widgets.
+- Responsible for presenting information to the user and interpreting user commands.
+- Consists of Widgets and also the state of the Widgets.
 
 ### **Application Layer**:
 
-* Defines the jobs the software is supposed to do. (Shouldn't find any UI code or network code)
-* Coordinates the application activity and delegates work to the next layer down.
-* It doesn't contain any complex business logic but the basic validation of user input before passing it to the other layers.
+- Defines the jobs the software is supposed to do. (Shouldn't find any UI code or network code)
+- Coordinates the application activity and delegates work to the next layer down.
+- It doesn't contain any complex business logic but the basic validation of user input before passing it to the other layers.
 
 ### **Domain Layer**:
 
-* Responsible for representing concepts of the business.
-* Manages the business state or delegates to the infrastructure layer.
-* Self contained and it doesn't depend on any other layers. The Domain layer should be well isolated from the other layers.
+- Responsible for representing concepts of the business.
+- Manages the business state or delegates to the infrastructure layer.
+- Self contained and it doesn't depend on any other layers. The Domain layer should be well isolated from the other layers.
 
 ### **Infrastructure Layer**:
 
-* Persists application data by implementing the repository interfaces provided by the Domain layer.
-* Provides generic technical capabilities that support the higher layers. It deals with APIs, persistence and network, etc.
-* Hides the complexity of the Domain layer.
+- Persists application data by implementing the repository interfaces provided by the Domain layer.
+- Provides generic technical capabilities that support the higher layers. It deals with APIs, persistence and network, etc.
+- Hides the complexity of the Domain layer.
 
 AppFlowy is composed in layers, where higher layers use the facilities provided by lower layers. Each layer provides a different abstraction from the layer above and below it. As you can see, the `Complexity` and `Abstraction` of these layers are depicted in the following diagram. As developers, we should pull the complexity downwards. Simple interfaces and powerful implementations (Think about the [open](https://man7.org/linux/man-pages/man2/open.2.html) function). Another way of expressing this idea is that it is more important for a module to have a simple interface than a simple implementation.
 
@@ -62,7 +62,7 @@ DDD classifies data as referenceable objects, or entities, and non-referenceable
 
 **Aggregate**
 
-`Entities` and `Value objects` can be grouped into aggregates. Aggregates can simplify the model by accessing the entire aggregate. For instance, Table has lots of rows. Each row using the table\_id to reference to the table. TableAggregate includes two entities: Table and the Row.
+`Entities` and `Value objects` can be grouped into aggregates. Aggregates can simplify the model by accessing the entire aggregate. For instance, Table has lots of rows. Each row using the table_id to reference to the table. TableAggregate includes two entities: Table and the Row.
 
 ```
      TableAggregate
@@ -173,5 +173,5 @@ interaction    │          │ └──────▲────────
 
 4\. The responsibility of [Unit of Work](https://martinfowler.com/eaaCatalog/unitOfWork.html) is to maintain a list of objects affected by a business transaction and coordinates the writing out of changes and the resolution of concurrency problems((No intermediate state)). If any one persistence service fails, the whole transaction will be failed so, roll back operation will be called to put the object back in initial state.
 
-1. Handling operations (INSERT, UPDATE and DELETE) with SQLite to persis the data.
+1. Handling operations (INSERT, UPDATE and DELETE) with SQLite to persist the data.
 2. Saving or querying the data in the cloud to finish the operation.
